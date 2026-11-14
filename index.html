@@ -443,7 +443,7 @@
   </style>
 </head>
 <body>
-  <canvas id="mesh" data-mesh="live-v3" aria-hidden="true"></canvas>
+  <canvas id="mesh" data-mesh="live-v4" aria-hidden="true"></canvas>
   <div id="cursorGlow" aria-hidden="true"></div>
   <div class="veil" aria-hidden="true"></div>
 
@@ -754,19 +754,49 @@
         };
       }
 
-      function layoutSeven() {
+      function inHeroDead(x, y) {
         const mobile = w < 900;
-        const ox = mobile ? w * 0.16 : w * 0.50;
-        const oy = mobile ? h * 0.10 : h * 0.14;
-        const sx = mobile ? w * 0.68 : w * 0.40;
-        const sy = mobile ? h * 0.26 : h * 0.60;
-        const top = [0, 1 / 3, 2 / 3, 1].map(function (u) {
-          return { x: ox + u * sx, y: oy };
-        });
-        const leg = [1 / 3, 2 / 3, 1].map(function (u) {
-          return { x: ox + sx - u * sx * 0.58, y: oy + u * sy };
-        });
-        return top.concat(leg);
+        if (y < 78) return true;
+        if (mobile) {
+          return y < h * 0.78 && x > w * 0.10 && x < w * 0.90;
+        }
+        const leftCopy = Math.min(560, w * 0.46);
+        if (x < leftCopy + 36 && y < h * 0.90) return true;
+        const cardL = w * 0.50;
+        const cardR = w * 0.97;
+        const cardT = h * 0.14;
+        const cardB = h * 0.64;
+        if (x > cardL && x < cardR && y > cardT && y < cardB) return true;
+        return false;
+      }
+
+      function layoutSeven() {
+        const placed = [];
+        const minDist = w < 900 ? 86 : 110;
+        let guard = 0;
+        while (placed.length < 7 && guard < 800) {
+          guard += 1;
+          const i = placed.length + guard;
+          const x = 24 + rand(i, 21) * (w - 48);
+          const y = 90 + rand(i, 22) * (h - 130);
+          if (inHeroDead(x, y)) continue;
+          let ok = true;
+          for (let p = 0; p < placed.length; p++) {
+            if (Math.hypot(x - placed[p].x, y - placed[p].y) < minDist) {
+              ok = false;
+              break;
+            }
+          }
+          if (ok) placed.push({ x: x, y: y });
+        }
+        while (placed.length < 7) {
+          const k = placed.length;
+          placed.push({
+            x: w * (0.72 + 0.04 * k),
+            y: h * (0.72 + 0.03 * (k % 3))
+          });
+        }
+        return placed;
       }
 
       function resize() {
@@ -797,7 +827,7 @@
             r: mobile ? 16 : 20,
             icon: meta.icon,
             label: meta.label,
-            amp: 22 + rand(i, 1) * 18,
+            amp: 10 + rand(i, 1) * 12,
             sp: 0.45 + rand(i, 2) * 0.4,
             depth: 0.7 + rand(i, 3) * 0.35,
             lerp: 0.07,
@@ -855,6 +885,10 @@
         node.py = node.y;
         node.x += (tx - node.x) * k;
         node.y += (ty - node.y) * k;
+        if (node.kind === "hub" && inHeroDead(node.x, node.y)) {
+          node.x += (node.homeX - node.x) * 0.45;
+          node.y += (node.homeY - node.y) * 0.45;
+        }
       }
 
       function drawIcon(node) {
@@ -928,15 +962,26 @@
           }
         }
 
-        ctx.beginPath();
-        ctx.moveTo(seven[0].x, seven[0].y);
-        for (let i = 1; i < seven.length; i++) ctx.lineTo(seven[i].x, seven[i].y);
-        ctx.strokeStyle = "rgba(110,231,255,0.22)";
-        ctx.lineWidth = 8;
-        ctx.stroke();
-        ctx.strokeStyle = "rgba(226,245,106,0.72)";
-        ctx.lineWidth = 2.4;
-        ctx.stroke();
+        for (let i = 0; i < seven.length; i++) {
+          const a = seven[i];
+          let n1 = -1, n2 = -1, d1 = 1e9, d2 = 1e9;
+          for (let j = 0; j < seven.length; j++) {
+            if (i === j) continue;
+            const d = Math.hypot(a.x - seven[j].x, a.y - seven[j].y);
+            if (d < d1) { d2 = d1; n2 = n1; d1 = d; n1 = j; }
+            else if (d < d2) { d2 = d; n2 = j; }
+          }
+          [n1, n2].forEach(function (n) {
+            if (n < 0) return;
+            const b = seven[n];
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = "rgba(226,245,106,0.28)";
+            ctx.lineWidth = 1.35;
+            ctx.stroke();
+          });
+        }
 
         if (mouse.real) {
           let linked = 0;
@@ -1045,7 +1090,7 @@
         }
 
         window.__L7M = {
-          version: "mesh-v3",
+          version: "mesh-v4",
           nodes: nodes.length,
           meanSpeed: meanSpeed,
           mouse: { x: mouse.x, y: mouse.y, real: mouse.real },
