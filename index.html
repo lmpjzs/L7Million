@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>L7Million — L7M</title>
+  <meta name="description" content="L7M (L7Million) é uma moeda na Solana para pagamentos entre pessoas e serviços. Supply máximo de 7 milhões. Prévia V1.">
+  <meta name="theme-color" content="#0e100c">
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e100c;
+      --ink: #f4f1e8;
+      --muted: #b7b2a6;
+      --lime: #e2f56a;
+      --line: rgba(244, 241, 232, 0.14);
+      --card: rgba(244, 241, 232, 0.035);
+      --serif: "Syne", "Avenir Next", sans-serif;
+      --sans: "Outfit", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(900px 480px at 100% -10%, rgba(226, 245, 106, 0.14), transparent 55%),
+        var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1120px, calc(100% - 2.5rem)); margin: 0 auto; }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      backdrop-filter: blur(16px);
+      background: rgba(14, 16, 12, 0.72);
+      border-bottom: 1px solid transparent;
+    }
+    .bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 4.25rem;
+    }
+    .brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; font-family: var(--serif); font-weight: 800; letter-spacing: -0.04em; }
+    .brand img { width: 2rem; height: 2rem; display: block; }
+    nav { display: flex; gap: 1.25rem; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+    nav a:hover, nav a:focus-visible { color: var(--ink); }
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.35rem 0.75rem;
+      color: var(--lime);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .hero { position: relative; padding: 4.5rem 0 3.5rem; overflow: hidden; }
+    .ghost {
+      position: absolute;
+      right: -0.08em;
+      top: -0.18em;
+      font-family: var(--serif);
+      font-weight: 800;
+      font-size: clamp(10rem, 28vw, 22rem);
+      line-height: 0.8;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(226, 245, 106, 0.18);
+      pointer-events: none;
+      user-select: none;
+    }
+    .kicker { color: var(--lime); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.82rem; margin: 0 0 1rem; }
+    h1 {
+      font-family: var(--serif);
+      font-weight: 800;
+      font-size: clamp(4.2rem, 12vw, 8.4rem);
+      line-height: 0.86;
+      letter-spacing: -0.055em;
+      margin: 0;
+    }
+    .lede { max-width: 38rem; font-size: clamp(1.25rem, 2vw, 1.65rem); line-height: 1.35; margin: 1.5rem 0 0.6rem; }
+    .sub { max-width: 36rem; color: var(--muted); margin: 0; }
+    .facts { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; padding: 0; list-style: none; }
+    .facts li {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem;
+    }
+    .facts strong { font-weight: 600; }
+    section { padding: 3.25rem 0; border-top: 1px solid var(--line); }
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      letter-spacing: -0.04em;
+      margin: 0 0 1.5rem;
+    }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    article {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 1.25rem;
+      padding: 1.35rem 1.25rem 1.5rem;
+      min-height: 100%;
+    }
+    .n { display: block; color: var(--lime); font-family: var(--serif); font-weight: 800; margin-bottom: 1.5rem; }
+    article h3 { margin: 0 0 0.45rem; font-size: 1.25rem; letter-spacing: -0.03em; }
+    article p, .steps p, dd { margin: 0; color: var(--muted); }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .steps strong { display: block; color: var(--ink); margin-bottom: 0.35rem; }
+    dl { display: grid; grid-template-columns: 220px 1fr; gap: 0.85rem 1.5rem; margin: 0; }
+    dt { color: var(--muted); }
+    dd { color: var(--ink); }
+    footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; color: var(--muted); font-size: 0.92rem; }
+    footer p { max-width: 46rem; margin: 0; }
+    :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+    @media (max-width: 800px) {
+      nav { display: none; }
+      .grid, .steps, dl { grid-template-columns: 1fr; }
+      .hero { padding-top: 3rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap bar">
+      <a class="brand" href="#topo"><img src="assets/mark.svg" alt="" width="32" height="32"> L7M</a>
+      <nav>
+        <a href="#uso">Uso</a>
+        <a href="#caminho">Caminho</a>
+        <a href="#ficha">Ficha</a>
+      </nav>
+      <span class="pill">Prévia V1</span>
+    </div>
+  </header>
+
+  <main id="topo">
+    <div class="wrap hero">
+      <span class="ghost" aria-hidden="true">7</span>
+      <p class="kicker">Solana · 7 milhões</p>
+      <h1>L7Million</h1>
+      <p class="lede">Pagamentos entre pessoas e serviços. Remessa direta, com segurança e simplicidade.</p>
+      <p class="sub">L7M é a moeda. O supply máximo é 7 milhões. A referência de abertura é 1 dólar — valor próprio, sem lastro e sem garantia de preço.</p>
+      <ul class="facts">
+        <li><strong>L7M</strong> ticker</li>
+        <li><strong>7.000.000</strong> máximo</li>
+        <li><strong>Solana</strong> rede</li>
+        <li><strong>Phantom</strong> carteira</li>
+      </ul>
+    </div>
+
+    <section id="uso">
+      <div class="wrap">
+        <h2>Pra que serve</h2>
+        <div class="grid">
+          <article>
+            <span class="n">01</span>
+            <h3>Pessoas</h3>
+            <p>Transferir de uma carteira a outra. O endereço é a conta. Sem fila de banco no meio.</p>
+          </article>
+          <article>
+            <span class="n">02</span>
+            <h3>Serviços</h3>
+            <p>Pagar quem entrega. A transação fica pública na rede e dá pra conferir antes e depois de assinar.</p>
+          </article>
+          <article>
+            <span class="n">03</span>
+            <h3>Remessas</h3>
+            <p>Mandar valor direto, de forma descentralizada. Começa pequeno, entre quem já tem carteira.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="caminho">
+      <div class="wrap">
+        <h2>Como a transferência funciona</h2>
+        <div class="steps">
+          <p><strong>1. Phantom</strong> A carteira na rede Solana. É nela que o L7M vai aparecer.</p>
+          <p><strong>2. Endereço</strong> Quem recebe passa o endereço da carteira, não um dado de banco.</p>
+          <p><strong>3. Assinatura</strong> Você confere o valor e assina. A rede registra. A taxa da rede é em SOL.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="ficha">
+      <div class="wrap">
+        <h2>Ficha</h2>
+        <dl>
+          <dt>Nome</dt><dd>L7Million</dd>
+          <dt>Símbolo</dt><dd>L7M</dd>
+          <dt>Supply máximo</dt><dd>7.000.000</dd>
+          <dt>Rede</dt><dd>Solana</dd>
+          <dt>Padrão</dt><dd>SPL — contrato ainda em formulação</dd>
+          <dt>Carteira</dt><dd>Phantom</dd>
+          <dt>Abertura</dt><dd>Referência de US$ 1. Não é lastro em dólar e não é piso.</dd>
+          <dt>Status</dt><dd>Prévia visual. Token ainda não emitido.</dd>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>Prévia V1. O L7M ainda não está em circulação. Não é oferta pública, não promete rendimento e não é stablecoin. O domínio próprio entra depois.</p>
+    </div>
+  </footer>
+</body>
+</html>
