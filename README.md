@@ -1,6 +1,6 @@
 # L7Million
 
-L7M — moeda para pagamentos entre pessoas e serviços, remessas diretas na Solana.
+Pagamentos diretos entre pessoas e serviços. Transferências e remessas com alta disponibilidade e confirmações rápidas.
 
 - Ticker: L7M
 - Supply máximo: 7.000.000
