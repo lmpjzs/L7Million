@@ -1,4 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="L7M">
-  <circle cx="32" cy="32" r="32" fill="#E2F56A"/>
-  <path fill="#12140E" d="M15.5 17.5h33v7.4H34.6L22.2 48h-8.4l13.2-23.1H15.5v-7.4z"/>
+  <defs>
+    <linearGradient id="l7m" x1="10" y1="2" x2="54" y2="62" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F6FFA8"/>
+      <stop offset="1" stop-color="#C6E24A"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="32" fill="url(#l7m)"/>
+  <circle cx="32" cy="32" r="26.5" fill="none" stroke="#12140E" stroke-width="1.15" opacity=".2"/>
+  <path fill="#12140E" d="M17.8 18.2h28.8v6.35H32.6L22.2 47.2h-7.7l11.7-22.65H17.8z"/>
 </svg>

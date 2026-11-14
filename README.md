@@ -1,10 +1,11 @@
 # L7Million
 
-Prévia V1 do site da L7M.
+L7M — moeda para pagamentos entre pessoas e serviços, remessas diretas na Solana.
 
 - Ticker: L7M
 - Supply máximo: 7.000.000
+- Unidade: 1 L7M · US$ 1
 - Rede: Solana
-- Token: ainda não emitido
+- Carteira: Phantom
 
-Página: https://lmpjzs.github.io/L7Million/
+Site: https://lmpjzs.github.io/L7Million/
